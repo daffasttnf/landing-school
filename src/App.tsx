@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
-import Jurusan from "./pages/jurusan";
+import Jurusan from "./pages/Jurusan";
 import Fasilitas from "./pages/Fasilitas";
 import Prestasi from "./pages/Prestasi";
 import PPDB from "./pages/ppdb";
