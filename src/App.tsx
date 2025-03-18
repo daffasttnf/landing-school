@@ -7,6 +7,7 @@ import Jurusan from "./pages/Jurusan";
 import Fasilitas from "./pages/Fasilitas";
 import Prestasi from "./pages/Prestasi";
 import PPDB from "./pages/ppdb";
+import Kontak from "./pages/Kontak";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/fasilitas" element={<Fasilitas />} />
         <Route path="/prestasi" element={<Prestasi />} />
         <Route path="/ppdb" element={<PPDB />} />
+        <Route path="/kontak" element={<Kontak />} />
       </Routes>
       <Footer />
     </div>
