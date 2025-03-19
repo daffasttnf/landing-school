@@ -1,7 +1,22 @@
-
 import { Link } from 'react-router-dom';
-import { Calendar, Clipboard, UserCheck, ChevronRight} from 'lucide-react';
-import { useState } from 'react';
+import { Calendar, Clipboard, UserCheck, ChevronRight } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { initializeApp } from "firebase/app";
+import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAJzBr1klyyq6dvICdxx3G-lREDPuSkzqk",
+  authDomain: "smkpermata-d15e6.firebaseapp.com",
+  projectId: "smkpermata-d15e6",
+  storageBucket: "smkpermata-d15e6.firebasestorage.app",
+  messagingSenderId: "567452837448",
+  appId: "1:567452837448:web:7ffbe53c5c0d403d415a7d",
+  measurementId: "G-02MXXDEVV6"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 
 export default function PPDB() {
   const [formData, setFormData] = useState({
@@ -20,6 +35,39 @@ export default function PPDB() {
     foto: null,
     kartuKeluarga: null,
   });
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+        setFormData(prev => ({ ...prev, email: user.email }));
+      } else {
+        setUser(null);
+      }
+    });
+  }, []);
+
+  const handleGoogleSignIn = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const user = result.user;
+        setUser(user);
+        setFormData(prev => ({ ...prev, email: user.email }));
+      }).catch((error) => {
+        console.error("Google Sign-In Error:", error);
+        alert("Gagal login dengan Google.");
+      });
+  };
+
+  const handleSignOut = () => {
+    auth.signOut().then(() => {
+      setUser(null);
+      setFormData(prev => ({ ...prev, email: "" }));
+    }).catch((error) => {
+      console.error("Sign-Out Error:", error);
+    });
+  };
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -30,10 +78,44 @@ export default function PPDB() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Data Pendaftaran:", formData);
-    alert("Pendaftaran berhasil dikirim!");
+
+    const data = new FormData();
+    data.append('name', formData.nama);
+    data.append('nisn', formData.nisn);
+    data.append('birthPlace', formData.tempatLahir);
+    data.append('birthDate', formData.tanggalLahir);
+    data.append('address', formData.alamat);
+    data.append('phoneNumber', formData.noHp);
+    data.append('email', formData.email);
+    data.append('fatherName', formData.namaAyah);
+    data.append('fatherOccupation', formData.pekerjaanAyah);
+    data.append('motherName', formData.namaIbu);
+    data.append('motherOccupation', formData.pekerjaanIbu);
+    data.append('major', formData.jurusan);
+    data.append('photo', formData.foto);
+    data.append('familyCard', formData.kartuKeluarga);
+
+    try {
+      const response = await fetch('http://localhost:3000/students', {
+        method: 'POST',
+        body: data,
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Server Error:', errorData);
+        throw new Error(errorData.message || 'Network response was not ok');
+      }
+
+      const result = await response.json();
+      console.log('Success:', result);
+      alert("Pendaftaran berhasil dikirim!");
+    } catch (error) {
+      console.error('Error:', error);
+      alert("Terjadi kesalahan saat mengirim pendaftaran.");
+    }
   };
 
   return (
@@ -44,7 +126,6 @@ export default function PPDB() {
           Bergabunglah dengan SMK Permata dan raih masa depan gemilang bersama kami. Daftarkan diri Anda sekarang!
         </p>
 
-        {/* Informasi Pendaftaran */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           <div className="bg-white rounded-lg shadow-2xl p-6 transform hover:scale-105 transition-transform duration-300 hover:shadow-lg">
             <div className="flex items-center mb-4">
@@ -101,210 +182,221 @@ export default function PPDB() {
           </div>
         </div>
 
-        {/* Formulir Pendaftaran Online */}
         <div className="bg-white rounded-lg shadow-2xl p-8 mb-16">
           <h3 className="text-3xl font-bold text-blue-900 mb-6">Formulir Pendaftaran Online</h3>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Data Pribadi */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-gray-700 font-medium mb-2">Nama Lengkap</label>
-                <input
-                  type="text"
-                  name="nama"
-                  value={formData.nama}
-                  onChange={handleChange}
-                  placeholder="Masukkan nama lengkap"
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
+          {user ? (
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-gray-700 font-medium mb-2">Nama Lengkap</label>
+                  <input
+                    type="text"
+                    name="nama"
+                    value={formData.nama}
+                    onChange={handleChange}
+                    placeholder="Masukkan nama lengkap"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-700 font-medium mb-2">NISN</label>
+                  <input
+                    type="text"
+                    name="nisn"
+                    value={formData.nisn}
+                    onChange={handleChange}
+                    placeholder="Masukkan NISN"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-gray-700 font-medium mb-2">Tempat Lahir</label>
+                  <input
+                    type="text"
+                    name="tempatLahir"
+                    value={formData.tempatLahir}
+                    onChange={handleChange}
+                    placeholder="Masukkan tempat lahir"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-700 font-medium mb-2">Tanggal Lahir</label>
+                  <input
+                    type="date"
+                    name="tanggalLahir"
+                    value={formData.tanggalLahir}
+                    onChange={handleChange}
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                  />
+                </div>
               </div>
               <div>
-                <label className="block text-gray-700 font-medium mb-2">NISN</label>
-                <input
-                  type="text"
-                  name="nisn"
-                  value={formData.nisn}
+                <label className="block text-gray-700 font-medium mb-2">Alamat</label>
+                <textarea
+                  name="alamat"
+                  value={formData.alamat}
                   onChange={handleChange}
-                  placeholder="Masukkan NISN"
+                  placeholder="Masukkan alamat"
+                  rows="3"
                   className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
-                />
+                ></textarea>
               </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-gray-700 font-medium mb-2">Tempat Lahir</label>
-                <input
-                  type="text"
-                  name="tempatLahir"
-                  value={formData.tempatLahir}
-                  onChange={handleChange}
-                  placeholder="Masukkan tempat lahir"
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-gray-700 font-medium mb-2">Nomor Telepon</label>
+                  <input
+                    type="tel"
+                    name="noHp"
+                    value={formData.noHp}
+                    onChange={handleChange}
+                    placeholder="Masukkan nomor telepon"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-700 font-medium mb-2">Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    disabled
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                  />
+                </div>
               </div>
-              <div>
-                <label className="block text-gray-700 font-medium mb-2">Tanggal Lahir</label>
-                <input
-                  type="date"
-                  name="tanggalLahir"
-                  value={formData.tanggalLahir}
-                  onChange={handleChange}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
-              </div>
-            </div>
-            <div>
-              <label className="block text-gray-700 font-medium mb-2">Alamat</label>
-              <textarea
-                name="alamat"
-                value={formData.alamat}
-                onChange={handleChange}
-                placeholder="Masukkan alamat"
-                rows="3"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              ></textarea>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-gray-700 font-medium mb-2">Nomor Telepon</label>
-                <input
-                  type="tel"
-                  name="noHp"
-                  value={formData.noHp}
-                  onChange={handleChange}
-                  placeholder="Masukkan nomor telepon"
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-gray-700 font-medium mb-2">Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="Masukkan email"
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
-              </div>
-            </div>
 
-            {/* Data Orang Tua */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-gray-700 font-medium mb-2">Nama Ayah</label>
-                <input
-                  type="text"
-                  name="namaAyah"
-                  value={formData.namaAyah}
-                  onChange={handleChange}
-                  placeholder="Masukkan nama ayah"
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-gray-700 font-medium mb-2">Nama Ayah</label>
+                  <input
+                    type="text"
+                    name="namaAyah"
+                    value={formData.namaAyah}
+                    onChange={handleChange}
+                    placeholder="Masukkan nama ayah"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-700 font-medium mb-2">Pekerjaan Ayah</label>
+                  <input
+                    type="text"
+                    name="pekerjaanAyah"
+                    value={formData.pekerjaanAyah}
+                    onChange={handleChange}
+                    placeholder="Masukkan pekerjaan ayah"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                  />
+                </div>
               </div>
-              <div>
-                <label className="block text-gray-700 font-medium mb-2">Pekerjaan Ayah</label>
-                <input
-                  type="text"
-                  name="pekerjaanAyah"
-                  value={formData.pekerjaanAyah}
-                  onChange={handleChange}
-                  placeholder="Masukkan pekerjaan ayah"
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-gray-700 font-medium mb-2">Nama Ibu</label>
+                  <input
+                    type="text"
+                    name="namaIbu"
+                    value={formData.namaIbu}
+                    onChange={handleChange}
+                    placeholder="Masukkan nama ibu"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-700 font-medium mb-2">Pekerjaan Ibu</label>
+                  <input
+                    type="text"
+                    name="pekerjaanIbu"
+                    value={formData.pekerjaanIbu}
+                    onChange={handleChange}
+                    placeholder="Masukkan pekerjaan ibu"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                  />
+                </div>
               </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-gray-700 font-medium mb-2">Nama Ibu</label>
-                <input
-                  type="text"
-                  name="namaIbu"
-                  value={formData.namaIbu}
-                  onChange={handleChange}
-                  placeholder="Masukkan nama ibu"
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-gray-700 font-medium mb-2">Pekerjaan Ibu</label>
-                <input
-                  type="text"
-                  name="pekerjaanIbu"
-                  value={formData.pekerjaanIbu}
-                  onChange={handleChange}
-                  placeholder="Masukkan pekerjaan ibu"
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
-              </div>
-            </div>
 
-            {/* Pilihan Jurusan */}
-            <div>
-              <label className="block text-gray-700 font-medium mb-2">Jurusan yang Dipilih</label>
-              <select
-                name="jurusan"
-                value={formData.jurusan}
-                onChange={handleChange}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
+              <div>
+                <label className="block text-gray-700 font-medium mb-2">Jurusan yang Dipilih</label>
+                <select
+                  name="jurusan"
+                  value={formData.jurusan}
+                  onChange={handleChange}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                >
+                  <option value="">Pilih Jurusan</option>
+                  <option value="tkj">Teknik Komputer dan Jaringan (TKJ)</option>
+                  <option value="rpl">Rekayasa Perangkat Lunak (RPL)</option>
+                  <option value="multimedia">Multimedia</option>
+                  <option value="otkp">Otomatisasi dan Tata Kelola Perkantoran (OTKP)</option>
+                  <option value="akuntansi">Akuntansi</option>
+                  <option value="pemasaran">Pemasaran</option>
+                </select>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-gray-700 font-medium mb-2">Upload Foto</label>
+                  <input
+                    type="file"
+                    name="foto"
+                    onChange={handleChange}
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-700 font-medium mb-2">Upload Kartu Keluarga</label>
+                  <input
+                    type="file"
+                    name="kartuKeluarga"
+                    onChange={handleChange}
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                  />
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="bg-yellow-500 text-blue-900 px-8 py-3 rounded-fullfont-semibold hover:bg-yellow-400 transition w-full md:w-auto"
               >
-                <option value="">Pilih Jurusan</option>
-                <option value="tkj">Teknik Komputer dan Jaringan (TKJ)</option>
-                <option value="rpl">Rekayasa Perangkat Lunak (RPL)</option>
-                <option value="multimedia">Multimedia</option>
-                <option value="otkp">Otomatisasi dan Tata Kelola Perkantoran (OTKP)</option>
-                <option value="akuntansi">Akuntansi</option>
-                <option value="pemasaran">Pemasaran</option>
-              </select>
+                Kirim Pendaftaran
+              </button>
+              <button
+                type="button"
+                onClick={handleSignOut}
+                className="bg-red-500 text-blue-900 px-8 py-3 rounded-fullfont-semibold hover:bg-red-400 transition w-full md:ml-5 md:w-auto"
+              >
+                Logout
+              </button>
+            </form>
+          ) : (
+            <div className="text-center">
+              <p className="mb-4">Silakan login dengan Google untuk mengisi formulir pendaftaran.</p>
+              <button
+                onClick={handleGoogleSignIn}
+                className="bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600"
+              >
+                Login dengan Google
+              </button>
             </div>
-
-            {/* Upload File */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-gray-700 font-medium mb-2">Upload Foto</label>
-                <input
-                  type="file"
-                  name="foto"
-                  onChange={handleChange}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-gray-700 font-medium mb-2">Upload Kartu Keluarga</label>
-                <input
-                  type="file"
-                  name="kartuKeluarga"
-                  onChange={handleChange}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
-              </div>
-            </div>
-
-            {/* Tombol Submit */}
-            <button
-              type="submit"
-              className="bg-yellow-500 text-blue-900 px-8 py-3 rounded-full font-semibold hover:bg-yellow-400 transition w-full md:w-auto"
-            >
-              Kirim Pendaftaran
-            </button>
-          </form>
+          )}
         </div>
 
-        {/* Informasi Tambahan */}
         <div className="text-center">
           <h3 className="text-3xl font-bold text-blue-900 mb-6">Butuh Bantuan?</h3>
           <p className="text-gray-600 mb-6">

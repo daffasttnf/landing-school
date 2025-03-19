@@ -99,12 +99,29 @@ export default function Jurusan() {
   ];
 
   return (
-    <div className="py-16 bg-gray-50">
+    <div className="pb-16 bg-gray-50">
+      <section className="relative h-[400px]">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage:
+              "url('https://images.unsplash.com/photo-1521747116042-5a810fda9664?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')",
+          }}
+        >
+          <div className="absolute inset-0 bg-blue-900/75"></div>
+        </div>
+        <div className="relative container mx-auto px-4 h-full flex items-center">
+          <div className="text-white max-w-2xl">
+            <h1 className="text-5xl font-bold mb-4">Program Jurusan Kami</h1>
+            <p className="text-xl">
+              Mengenal lebih dekat SMK Permata 1 dan 2 Bogor
+            </p>
+          </div>
+        </div>
+      </section>
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-12 text-blue-900">Program Jurusan Kami</h2>
-
         {/* SMK Permata 1 - Teknikal */}
-        <div className="mb-16">
+        <div className="mb-16 pt-16">
           <h3 className="text-3xl font-bold text-blue-900 mb-8">SMK Permata 1 - Teknikal</h3>
           <div className="space-y-12">
             {technicalPrograms.map((program, index) => (

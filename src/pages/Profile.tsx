@@ -50,8 +50,88 @@ export default function Profile() {
         </div>
       </section>
 
-      {/* Visi Misi Section */}
+      {/* Sambutan Kepala Sekolah */}
       <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold mb-8 text-blue-900">
+            Sambutan Kepala Sekolah
+          </h2>
+          <div className="space-y-12">
+            {/* Sambutan Kepala SMK Permata 1 */}
+            <div className="bg-white rounded-lg shadow-lg p-8">
+              <div className="flex flex-col md:flex-row items-center md:items-start space-y-6 md:space-y-0 md:space-x-8">
+                <img
+                  src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80"
+                  alt="Kepala SMK Permata 1"
+                  className="w-48 h-48 rounded-full object-cover"
+                />
+                <div className="prose max-w-none">
+                  <h3 className="text-2xl font-bold mb-4 text-blue-900">
+                    Sambutan dari Kepala SMK Permata 1 Bogor
+                  </h3>
+                  <p className="text-gray-600 mb-4">
+                    Assalamualaikum Warahmatullahi Wabarakatuh,
+                  </p>
+                  <p className="text-gray-600 mb-4">
+                    Selamat datang di SMK Permata 1 Bogor, sebuah institusi pendidikan yang berkomitmen untuk membentuk generasi muda yang unggul, berkarakter, dan siap bersaing di era global. Sejak berdiri pada tahun 1990, kami telah berupaya memberikan pendidikan berkualitas dengan mengedepankan nilai-nilai kejujuran, disiplin, dan kreativitas.
+                  </p>
+                  <p className="text-gray-600 mb-4">
+                    Kami percaya bahwa setiap siswa memiliki potensi yang dapat dikembangkan. Melalui program keahlian yang relevan dengan kebutuhan industri, fasilitas pembelajaran modern, dan dukungan dari tenaga pendidik yang profesional, kami berharap dapat mencetak lulusan yang siap menghadapi tantangan masa depan.
+                  </p>
+                  <p className="text-gray-600 mb-4">
+                    Terima kasih atas kepercayaan yang diberikan kepada kami. Mari bersama-sama membangun masa depan yang gemilang.
+                  </p>
+                  <p className="text-gray-600 mb-4">
+                    Wassalamualaikum Warahmatullahi Wabarakatuh,
+                  </p>
+                  <p className="text-gray-600 font-semibold">
+                    Dr. Ahmad Fauzi, M.Pd.
+                  </p>
+                  <p className="text-gray-600">Kepala SMK Permata 1 Bogor</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Sambutan Kepala SMK Permata 2 */}
+            <div className="bg-white rounded-lg shadow-lg p-8">
+              <div className="flex flex-col md:flex-row items-center md:items-start space-y-6 md:space-y-0 md:space-x-8">
+                <img
+                  src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80"
+                  alt="Kepala SMK Permata 2"
+                  className="w-48 h-48 rounded-full object-cover"
+                />
+                <div className="prose max-w-none">
+                  <h3 className="text-2xl font-bold mb-4 text-blue-900">
+                    Sambutan dari Kepala SMK Permata 2 Bogor
+                  </h3>
+                  <p className="text-gray-600 mb-4">
+                    Assalamualaikum Warahmatullahi Wabarakatuh,
+                  </p>
+                  <p className="text-gray-600 mb-4">
+                    Puji syukur kehadirat Allah SWT, atas rahmat dan karunia-Nya, SMK Permata 2 Bogor terus berupaya memberikan yang terbaik bagi peserta didik. Sebagai lembaga pendidikan kejuruan, kami berkomitmen untuk menyiapkan siswa menjadi tenaga kerja yang kompeten, kreatif, dan berkarakter.
+                  </p>
+                  <p className="text-gray-600 mb-4">
+                    Dengan dukungan fasilitas yang memadai, kurikulum berbasis kompetensi, dan kerjasama yang erat dengan dunia industri, kami yakin siswa-siswi SMK Permata 2 Bogor akan mampu bersaing di tingkat nasional maupun internasional.
+                  </p>
+                  <p className="text-gray-600 mb-4">
+                    Kami mengajak seluruh siswa untuk memanfaatkan kesempatan belajar sebaik-baiknya. Mari bersama-sama mewujudkan mimpi dan meraih kesuksesan.
+                  </p>
+                  <p className="text-gray-600 mb-4">
+                    Wassalamualaikum Warahmatullahi Wabarakatuh,
+                  </p>
+                  <p className="text-gray-600 font-semibold">
+                    Dra. Siti Rahayu, M.M.
+                  </p>
+                  <p className="text-gray-600">Kepala SMK Permata 2 Bogor</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Visi Misi Section */}
+      <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center p-8 bg-white rounded-lg shadow-lg">
@@ -91,7 +171,7 @@ export default function Profile() {
       </section>
 
       {/* Struktur Organisasi */}
-      <section className="py-16">
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-8 text-blue-900">
             Struktur Organisasi
@@ -137,7 +217,7 @@ export default function Profile() {
       </section>
 
       {/* Prestasi Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-8 text-blue-900">
             Prestasi Terkini

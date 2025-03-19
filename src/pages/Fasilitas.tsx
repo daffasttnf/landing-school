@@ -116,16 +116,30 @@ export default function Fasilitas() {
   ];
 
   return (
-    <div className="py-16 bg-gradient-to-b from-blue-50 to-white">
-      <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-12 text-blue-900">
-          Fasilitas Unggulan SMK Permata
-        </h2>
-        <p className="text-xl text-gray-600 text-center mb-16 max-w-2xl mx-auto">
-          Kami menyediakan fasilitas terbaik untuk mendukung proses pembelajaran
-          dan pengembangan bakat siswa.
-        </p>
-
+    <div className="pb-16 bg-gradient-to-b from-blue-50 to-white">
+      <section className="relative h-[400px]">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage:
+              "url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')",
+          }}
+        >
+          <div className="absolute inset-0 bg-blue-900/75"></div>
+        </div>
+        <div className="relative container mx-auto px-4 h-full flex items-center">
+          <div className="text-white max-w-2xl">
+            <h1 className="text-5xl font-bold mb-4">
+              Fasilitas Unggulan SMK Permata
+            </h1>
+            <p className="text-xl">
+              Kami menyediakan fasilitas terbaik untuk mendukung proses
+              pembelajaran dan pengembangan bakat siswa.
+            </p>
+          </div>
+        </div>
+      </section>
+      <div className="container mx-auto px-4 pt-16">
         {/* Grid Fasilitas dengan Ukuran Berbeda */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {facilities.map((facility, index) => (
