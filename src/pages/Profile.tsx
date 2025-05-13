@@ -61,7 +61,7 @@ export default function Profile() {
             <div className="bg-white rounded-lg shadow-lg p-8">
               <div className="flex flex-col md:flex-row items-center md:items-start space-y-6 md:space-y-0 md:space-x-8">
                 <img
-                  src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80"
+                  src="https://www.smkn2bogor.sch.id/filez/foto_ptk/foto_ptk_20220111_1641875888.png"
                   alt="Kepala SMK Permata 1"
                   className="w-48 h-48 rounded-full object-cover"
                 />
@@ -96,7 +96,7 @@ export default function Profile() {
             <div className="bg-white rounded-lg shadow-lg p-8">
               <div className="flex flex-col md:flex-row items-center md:items-start space-y-6 md:space-y-0 md:space-x-8">
                 <img
-                  src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80"
+                  src="https://www.smkn2bogor.sch.id/filez/foto_ptk/foto_ptk_20220111_1641876018.png"
                   alt="Kepala SMK Permata 2"
                   className="w-48 h-48 rounded-full object-cover"
                 />
@@ -182,19 +182,19 @@ export default function Profile() {
                 name: "Dr. H. Ahmad Supriyadi, M.Pd",
                 position: "Kepala Sekolah",
                 image:
-                  "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80",
+                  "https://www.smkn2bogor.sch.id/filez/foto_ptk/foto_ptk_20220111_1641877294.png",
               },
               {
                 name: "Dra. Siti Aminah, M.M",
                 position: "Wakil Kepala Sekolah Bidang Kurikulum",
                 image:
-                  "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80",
+                  "https://www.smkn2bogor.sch.id/filez/foto_ptk/foto_ptk_20220111_1641876512.png",
               },
               {
                 name: "H. Budi Santoso, S.Pd",
                 position: "Wakil Kepala Sekolah Bidang Kesiswaan",
                 image:
-                  "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80",
+                  "https://www.smkn2bogor.sch.id/filez/foto_ptk/foto_ptk_20220111_1641878056.png",
               },
             ].map((staff, index) => (
               <div

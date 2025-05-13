@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import {
-  Wifi,
+    Wifi,
   Book,
   Microscope,
   Library,
@@ -10,6 +10,10 @@ import {
   Building,
   Briefcase,
   BookOpen,
+  Mic,
+  Flag,
+  Activity,
+  Music2
 } from "lucide-react";
 
 export default function Fasilitas() {
@@ -115,6 +119,51 @@ export default function Fasilitas() {
     },
   ];
 
+  const extracurriculars = [
+    {
+      title: "Futsal",
+      description: "Mengembangkan keterampilan bermain futsal dan kerja tim.",
+      icon: <Music2 className="w-8 h-8 text-white" />,
+      image: "https://images.unsplash.com/photo-1543357480-c60d400e2ef9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+      bgColor: "bg-green-600",
+    },
+    {
+      title: "Teater",
+      description: "Mengasah bakat akting dan seni peran melalui pementasan drama.",
+      icon: <Mic className="w-8 h-8 text-white" />,
+      image: "https://images.unsplash.com/photo-1547153760-18fc86324498?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+      bgColor: "bg-purple-600",
+    },
+    {
+      title: "Pramuka",
+      description: "Membentuk karakter disiplin dan mandiri melalui kegiatan kepramukaan.",
+      icon: <Flag className="w-8 h-8 text-white" />,
+      image: "https://images.unsplash.com/photo-1607962837359-5e7e89f86776?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+      bgColor: "bg-yellow-600",
+    },
+    {
+      title: "Paskibra",
+      description: "Melatih kedisiplinan dan kecintaan tanah air melalui baris-berbaris.",
+      icon: <Activity className="w-8 h-8 text-white" />,
+      image: "https://images.unsplash.com/photo-1568866890303-0c0e4a8d31d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+      bgColor: "bg-red-600",
+    },
+    {
+      title: "Nasyid",
+      description: "Mengembangkan bakat menyanyi dengan lagu-lagu islami bernuansa paduan suara.",
+      icon: <Music2 className="w-8 h-8 text-white" />,
+      image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+      bgColor: "bg-blue-600",
+    },
+    {
+      title: "Dance",
+      description: "Menyalurkan kreativitas melalui gerakan tari modern dan tradisional.",
+      icon: <Activity className="w-8 h-8 text-white" />,
+      image: "https://images.unsplash.com/photo-1547153760-18fc86324498?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+      bgColor: "bg-pink-600",
+    },
+  ];
+
   return (
     <div className="pb-16 bg-gradient-to-b from-blue-50 to-white">
       <section className="relative h-[400px]">
@@ -190,6 +239,55 @@ export default function Fasilitas() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Ekstrakurikuler Section with Images */}
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold text-blue-900 mb-8 text-center">
+            Ekstrakurikuler
+          </h2>
+          <p className="text-gray-600 text-center max-w-3xl mx-auto mb-12">
+            Temukan passion Anda melalui berbagai kegiatan ekstrakurikuler 
+            yang kami sediakan untuk pengembangan minat dan bakat siswa.
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {extracurriculars.map((item, index) => (
+              <div 
+                key={index}
+                className="bg-white rounded-lg shadow-xl overflow-hidden hover:shadow-2xl transition-shadow duration-300 transform hover:-translate-y-1"
+              >
+                {/* Ekstrakurikuler Image */}
+                <div className="relative h-48">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                  <div className="absolute bottom-4 left-4">
+                    <div className={`p-3 rounded-full ${item.bgColor} inline-flex`}>
+                      {item.icon}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Ekstrakurikuler Content */}
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-blue-900 mb-2">
+                    {item.title}
+                  </h3>
+                  <p className="text-gray-600 mb-4">{item.description}</p>
+                  <Link
+                    to={`/ekstrakurikuler/${item.title.toLowerCase().replace(/ /g, "-")}`}
+                    className="text-blue-600 font-medium flex items-center hover:text-blue-800"
+                  >
+                    Selengkapnya <ChevronRight className="w-4 h-4 ml-1" />
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Call to Action */}

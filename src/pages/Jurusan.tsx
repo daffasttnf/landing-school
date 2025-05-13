@@ -5,6 +5,7 @@ export default function Jurusan() {
   const technicalPrograms = [
     {
       title: "Teknik Komputer dan Jaringan (TKJ)",
+      slug: "teknik-komputer-dan-jaringan",
       description: "Mempelajari perakitan komputer, jaringan, dan sistem operasi.",
       icon: <Cpu className="w-8 h-8 text-blue-900" />,
       image: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
@@ -20,6 +21,7 @@ export default function Jurusan() {
     },
     {
       title: "Rekayasa Perangkat Lunak (RPL)",
+      slug: "rekayasa-perangkat-lunak",
       description: "Mempelajari pemrograman dan pengembangan aplikasi.",
       icon: <Code className="w-8 h-8 text-blue-900" />,
       image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
@@ -35,6 +37,7 @@ export default function Jurusan() {
     },
     {
       title: "Teknik Kendaraan Ringan (TKR)",
+      slug: "teknik-kendaraan-ringan",
       description: "Mempelajari perawatan dan perbaikan kendaraan ringan.",
       icon: <Wrench className="w-8 h-8 text-blue-900" />,
       image: "https://images.unsplash.com/photo-1583121274602-3e2820c69888?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
@@ -53,6 +56,7 @@ export default function Jurusan() {
   const businessPrograms = [
     {
       title: "Otomatisasi dan Tata Kelola Perkantoran (OTKP)",
+      slug: "otomatisasi-dan-tata-kelola-perkantoran",
       description: "Mempelajari administrasi perkantoran dan manajemen dokumen.",
       icon: <Clipboard className="w-8 h-8 text-blue-900" />,
       image: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
@@ -68,6 +72,7 @@ export default function Jurusan() {
     },
     {
       title: "Akuntansi",
+      slug: "akuntansi",
       description: "Mempelajari pencatatan keuangan dan pelaporan keuangan.",
       icon: <BookOpen className="w-8 h-8 text-blue-900" />,
       image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
@@ -83,6 +88,7 @@ export default function Jurusan() {
     },
     {
       title: "Pemasaran",
+      slug: "pemasaran",
       description: "Mempelajari strategi pemasaran dan penjualan produk.",
       icon: <Briefcase className="w-8 h-8 text-blue-900" />,
       image: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
@@ -164,10 +170,18 @@ export default function Jurusan() {
                     </div>
 
                     {/* Testimoni */}
-                    <div className="bg-gray-100 p-6 rounded-lg">
+                    <div className="bg-gray-100 p-6 rounded-lg mb-6">
                       <p className="text-gray-600 italic mb-2">"{program.testimonial.quote}"</p>
                       <p className="text-blue-900 font-semibold">- {program.testimonial.name}</p>
                     </div>
+
+                    {/* Button Detail */}
+                    <Link
+                      to={`/jurusan/${program.slug}`}
+                      className="inline-block bg-blue-900 text-white px-6 py-2 rounded-lg hover:bg-blue-800 transition"
+                    >
+                      Lihat Detail Jurusan
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -219,10 +233,18 @@ export default function Jurusan() {
                     </div>
 
                     {/* Testimoni */}
-                    <div className="bg-gray-100 p-6 rounded-lg">
+                    <div className="bg-gray-100 p-6 rounded-lg mb-6">
                       <p className="text-gray-600 italic mb-2">"{program.testimonial.quote}"</p>
                       <p className="text-blue-900 font-semibold">- {program.testimonial.name}</p>
                     </div>
+
+                    {/* Button Detail */}
+                    <Link
+                      to={`/jurusan/${program.slug}`}
+                      className="inline-block bg-blue-900 text-white px-6 py-2 rounded-lg hover:bg-blue-800 transition"
+                    >
+                      Lihat Detail Jurusan
+                    </Link>
                   </div>
                 </div>
               </div>

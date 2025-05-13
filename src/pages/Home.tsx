@@ -16,21 +16,21 @@ export default function Home() {
   const heroImages = [
     {
       image:
-        "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        "https://i.ibb.co/tP1ZWqFj/belajar.jpg",
       title: "Selamat Datang di SMK Permata",
       description:
         "Membentuk generasi unggul yang berkarakter, kompeten, dan siap bersaing di era global",
     },
     {
       image:
-        "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        "https://i.ibb.co/PZ9Q0jg3/sekolah.jpg",
       title: "Pendidikan Berkualitas",
       description:
         "Kami menyediakan pendidikan berkualitas dengan fasilitas terbaik",
     },
     {
       image:
-        "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        "https://i.ibb.co/vCtjHmvf/perpus.jpg",
       title: "Lingkungan Belajar Nyaman",
       description:
         "Lingkungan belajar yang nyaman dan mendukung perkembangan siswa",
